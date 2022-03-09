@@ -9,5 +9,4 @@ public class OshunbeautyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OshunbeautyApplication.class, args);
 	}
-
 }

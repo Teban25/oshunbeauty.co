@@ -1,6 +1,7 @@
 package co.oshunbeauty.entity;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 
 @Entity(name = "sale_orders")
 public class SaleOrder {
@@ -39,4 +39,108 @@ public class SaleOrder {
 	
 	@Column(name = "last_modified_user", nullable = false)
 	private String lastModifiedUser;
+	
+	public SaleOrder() {
+	}
+	
+	public SaleOrder(Double totalSaleOrderPrice, ZonedDateTime saleOrderDate, Payment payment,
+	                 ZonedDateTime lastModifiedDate, String creationUser, String lastModifiedUser) {
+		this.totalSaleOrderPrice = totalSaleOrderPrice;
+		this.saleOrderDate = saleOrderDate;
+		this.payment = payment;
+		this.lastModifiedDate = lastModifiedDate;
+		this.creationUser = creationUser;
+		this.lastModifiedUser = lastModifiedUser;
+	}
+	
+	public Long getSaleOrderId() {
+		return saleOrderId;
+	}
+	
+	public void setSaleOrderId(Long saleOrderId) {
+		this.saleOrderId = saleOrderId;
+	}
+	
+	public String getSaleOrderNumber() {
+		return saleOrderNumber;
+	}
+	
+	public void setSaleOrderNumber(String saleOrderNumber) {
+		this.saleOrderNumber = saleOrderNumber;
+	}
+	
+	public Double getTotalSaleOrderPrice() {
+		return totalSaleOrderPrice;
+	}
+	
+	public void setTotalSaleOrderPrice(Double totalSaleOrderPrice) {
+		this.totalSaleOrderPrice = totalSaleOrderPrice;
+	}
+	
+	public ZonedDateTime getSaleOrderDate() {
+		return saleOrderDate;
+	}
+	
+	public void setSaleOrderDate(ZonedDateTime saleOrderDate) {
+		this.saleOrderDate = saleOrderDate;
+	}
+	
+	public Payment getPayment() {
+		return payment;
+	}
+	
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+	
+	public ZonedDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+	
+	public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+	
+	public String getCreationUser() {
+		return creationUser;
+	}
+	
+	public void setCreationUser(String creationUser) {
+		this.creationUser = creationUser;
+	}
+	
+	public String getLastModifiedUser() {
+		return lastModifiedUser;
+	}
+	
+	public void setLastModifiedUser(String lastModifiedUser) {
+		this.lastModifiedUser = lastModifiedUser;
+	}
+	
+	@Override
+	public String toString() {
+		return "SaleOrder{" +
+				"saleOrderId=" + saleOrderId +
+				", saleOrderNumber='" + saleOrderNumber + '\'' +
+				", totalSaleOrderPrice=" + totalSaleOrderPrice +
+				", saleOrderDate=" + saleOrderDate +
+				", payment=" + payment +
+				", lastModifiedDate=" + lastModifiedDate +
+				", creationUser='" + creationUser + '\'' +
+				", lastModifiedUser='" + lastModifiedUser + '\'' +
+				'}';
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+		SaleOrder saleOrder = (SaleOrder) o;
+		return saleOrderId.equals(saleOrder.saleOrderId) && saleOrderNumber.equals(saleOrder.saleOrderNumber) && totalSaleOrderPrice.equals(saleOrder.totalSaleOrderPrice) && saleOrderDate.equals(saleOrder.saleOrderDate) && payment.equals(saleOrder.payment) && lastModifiedDate.equals(saleOrder.lastModifiedDate) && creationUser.equals(saleOrder.creationUser) && lastModifiedUser.equals(saleOrder.lastModifiedUser);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(saleOrderId, saleOrderNumber, totalSaleOrderPrice, saleOrderDate, payment, lastModifiedDate, creationUser, lastModifiedUser);
+	}
 }

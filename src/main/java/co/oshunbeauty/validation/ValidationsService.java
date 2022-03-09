@@ -1,5 +1,6 @@
 package co.oshunbeauty.validation;
 
+import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.Set;
@@ -41,6 +42,33 @@ public class ValidationsService {
 		if(isNotAnEmptyViolations(violations)) {
 			String messagesViolations = getMessagesViolations(violations);
 			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar la categoria: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isBrandValidToSave(Brand brand) {
+		if(brand.getBrandId() != null) {
+			throw new BadRequestException("Para crear una nueva marca no debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Brand>> violations = validateMandatoryFields(brand);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para crear una marca: "
+					+ messagesViolations);
+		}
+	}
+	
+	
+	public void isBrandValidToUpdate(Brand brand) {
+		if(brand.getBrandId() == null) {
+			throw new BadRequestException("Para actualizar una nueva marca debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Brand>> violations = validateMandatoryFields(brand);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar la marca: " +
 					messagesViolations);
 		}
 	}

@@ -1,5 +1,6 @@
 package co.oshunbeauty.resources;
 
+import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -31,5 +32,28 @@ public class EntitiesMocks {
 				"test", "test");
 		
 		return category;
+	}
+	
+	public static Brand getBrand() {
+		Brand brand = new Brand("athos",ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return brand;
+	}
+	
+	public static List<Brand> getBrands() {
+		Brand brand1 = new Brand("athos",ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Brand brand2 = new Brand("j&c",ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Brand brand3 = new Brand("serenity",ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Brand brand4 = new Brand("cepillos trad",ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+
+		return Arrays.asList(brand1, brand2, brand3, brand4);
 	}
 }

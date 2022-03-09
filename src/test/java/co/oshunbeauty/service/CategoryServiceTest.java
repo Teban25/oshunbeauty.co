@@ -64,7 +64,6 @@ public class CategoryServiceTest {
 				() -> assertEquals(categoryId, categoryFound.get().getCategoryId()),
 				() -> assertEquals(NAME, categoryFound.get().getName())
 		);
-		assertTrue(categoryFound.isPresent());
 	}
 	
 	@Test

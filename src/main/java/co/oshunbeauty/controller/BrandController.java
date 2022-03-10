@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("rs/brands")
+@RequestMapping("/rs/brands")
 @Slf4j
 public class BrandController {
 	
@@ -94,11 +94,11 @@ public class BrandController {
 	}
 	
 	private String getErrorMessageBrandsAreNotSame(Brand brand) {
-		return String.format("La marca con id= %s no fue encontrada o no corresponde a la " +
+		return String.format("La marca con id %s no fue encontrada o no corresponde a la " +
 				"ingresada", brand.getBrandId());
 	}
 	
 	private String getMessageForBrandNotFoundException(Long id) {
-		return String.format("La marca con id= %s no fue encontrada", id);
+		return String.format("La marca con id %s no fue encontrada", id);
 	}
 }

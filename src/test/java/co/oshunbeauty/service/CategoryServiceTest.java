@@ -72,13 +72,13 @@ public class CategoryServiceTest {
 		List<Category> categories = getCategories();
 		// When
 		Mockito.when(categoryRepository.findAll()).thenReturn(categories);
-		List<Category> currentCategory = categoryService.getAllCategories();
+		List<Category> currentCategories = categoryService.getAllCategories();
 		// Then
 		verify(categoryRepository, times(1)).findAll();
 		assertAll(
-				() -> assertNotNull(currentCategory),
-				() -> assertEquals(4, currentCategory.size()),
-				() -> assertEquals(NAME, currentCategory.get(0).getName())
+				() -> assertNotNull(currentCategories),
+				() -> assertEquals(4, currentCategories.size()),
+				() -> assertEquals(NAME, currentCategories.get(0).getName())
 		);
 	}
 	
@@ -89,13 +89,13 @@ public class CategoryServiceTest {
 				.collect(Collectors.toList());
 		// When
 		Mockito.when(categoryRepository.findCategoriesByName(any(String.class))).thenReturn(categories);
-		List<Category> currentCategory = categoryService.getCategoriesByName(NAME);
+		List<Category> currentCategories = categoryService.getCategoriesByName(NAME);
 		// Then
 		verify(categoryRepository, times(1)).findCategoriesByName(any(String.class));
 		assertAll(
-				() -> assertNotNull(currentCategory),
-				() -> assertEquals(1, currentCategory.size()),
-				() -> assertEquals(NAME, currentCategory.get(0).getName())
+				() -> assertNotNull(currentCategories),
+				() -> assertEquals(1, currentCategories.size()),
+				() -> assertEquals(NAME, currentCategories.get(0).getName())
 		);
 	}
 	

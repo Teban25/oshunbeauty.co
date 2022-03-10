@@ -80,13 +80,13 @@ public class BrandControllerTest {
 		List<Brand> brandsToFind = getBrands();
 		// WHEN
 		when(brandService.getAllBrands()).thenReturn(brandsToFind);
-		List<Brand> actualBrand = brandController.getAllBrands();
+		List<Brand> actualBrands = brandController.getAllBrands();
 		// THEN
 		verify(brandService, times(1)).getAllBrands();
 		assertAll(
-				() -> assertNotNull(actualBrand),
-				() -> assertEquals(4, actualBrand.size()),
-				() -> assertEquals(NAME, actualBrand.get(0).getCompanyName())
+				() -> assertNotNull(actualBrands),
+				() -> assertEquals(4, actualBrands.size()),
+				() -> assertEquals(NAME, actualBrands.get(0).getCompanyName())
 		);
 	}
 	

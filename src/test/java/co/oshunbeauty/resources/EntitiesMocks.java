@@ -3,6 +3,7 @@ package co.oshunbeauty.resources;
 import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
+import co.oshunbeauty.entity.Keyword;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -81,4 +82,26 @@ public class EntitiesMocks {
 		return Arrays.asList(customer1, customer2, customer3, customer4);
 	}
 	
+	public static Keyword getKeyword() {
+		Keyword keyword = new Keyword("color","naranja", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return keyword;
+	}
+	
+	public static List<Keyword> getKeywords() {
+		Keyword keyword1 = new Keyword("color","naranja", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Keyword keyword2 = new Keyword("tamaño","200ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Keyword keyword3 = new Keyword("color","verde", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Keyword keyword4 = new Keyword("tamaño","500ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return Arrays.asList(keyword1, keyword2, keyword3, keyword4);
+	}
 }

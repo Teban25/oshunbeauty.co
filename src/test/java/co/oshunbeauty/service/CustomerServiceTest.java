@@ -67,13 +67,13 @@ public class CustomerServiceTest {
 		List<Customer> customers = getCustomers();
 		// When
 		Mockito.when(customerRepository.findAll()).thenReturn(customers);
-		List<Customer> currentCustomer = customerService.getAllCustomers();
+		List<Customer> currentCustomers = customerService.getAllCustomers();
 		// Then
 		verify(customerRepository, times(1)).findAll();
 		assertAll(
-				() -> assertNotNull(currentCustomer),
-				() -> assertEquals(4, currentCustomer.size()),
-				() -> assertEquals(IDENTIFICATION, currentCustomer.get(0).getIdentification())
+				() -> assertNotNull(currentCustomers),
+				() -> assertEquals(4, currentCustomers.size()),
+				() -> assertEquals(IDENTIFICATION, currentCustomers.get(0).getIdentification())
 		);
 	}
 	

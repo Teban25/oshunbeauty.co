@@ -72,13 +72,13 @@ public class BrandServiceTest {
 		List<Brand> brands = getBrands();
 		// When
 		Mockito.when(brandRepository.findAll()).thenReturn(brands);
-		List<Brand> currentBrand = brandService.getAllBrands();
+		List<Brand> currentBrands = brandService.getAllBrands();
 		// Then
 		verify(brandRepository, times(1)).findAll();
 		assertAll(
-				() -> assertNotNull(currentBrand),
-				() -> assertEquals(4, currentBrand.size()),
-				() -> assertEquals(NAME, currentBrand.get(0).getCompanyName())
+				() -> assertNotNull(currentBrands),
+				() -> assertEquals(4, currentBrands.size()),
+				() -> assertEquals(NAME, currentBrands.get(0).getCompanyName())
 		);
 	}
 	
@@ -89,13 +89,13 @@ public class BrandServiceTest {
 				.collect(Collectors.toList());
 		// When
 		Mockito.when(brandRepository.findBrandsByName(any(String.class))).thenReturn(brands);
-		List<Brand> currentBrand = brandService.getBrandsByName(NAME);
+		List<Brand> currentBrands = brandService.getBrandsByName(NAME);
 		// Then
 		verify(brandRepository, times(1)).findBrandsByName(any(String.class));
 		assertAll(
-				() -> assertNotNull(currentBrand),
-				() -> assertEquals(1, currentBrand.size()),
-				() -> assertEquals(NAME, currentBrand.get(0).getCompanyName())
+				() -> assertNotNull(currentBrands),
+				() -> assertEquals(1, currentBrands.size()),
+				() -> assertEquals(NAME, currentBrands.get(0).getCompanyName())
 		);
 	}
 	
@@ -140,5 +140,4 @@ public class BrandServiceTest {
 				() -> assertEquals(NAME, currentBrand.getCompanyName())
 		);
 	}
-
 }

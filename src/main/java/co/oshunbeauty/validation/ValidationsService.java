@@ -3,6 +3,7 @@ package co.oshunbeauty.validation;
 import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
+import co.oshunbeauty.entity.Keyword;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -96,6 +97,32 @@ public class ValidationsService {
 		if(isNotAnEmptyViolations(violations)) {
 			String messagesViolations = getMessagesViolations(violations);
 			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el cliente: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isKeywordValidToSave(Keyword keyword) {
+		if(keyword.getKeywordId() != null) {
+			throw new BadRequestException("Para crear una palabra clave no debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Keyword>> violations = validateMandatoryFields(keyword);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para crear una palabra clave: "
+					+ messagesViolations);
+		}
+	}
+	
+	public void isKeywordValidToUpdate(Keyword keyword) {
+		if(keyword.getKey() == null) {
+			throw new BadRequestException("Para actualizar una palabra clave debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Keyword>> violations = validateMandatoryFields(keyword);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar la palabra clave: " +
 					messagesViolations);
 		}
 	}

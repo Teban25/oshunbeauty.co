@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "keywords")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -21,9 +22,11 @@ public class Keyword {
 	@Column(name = "keyword_id")
 	private Long keywordId;
 	
+	@NotNull
 	@Column(name = "key", nullable = false)
 	private String key;
 	
+	@NotNull
 	@Column(name = "value", nullable = false)
 	private String value;
 	

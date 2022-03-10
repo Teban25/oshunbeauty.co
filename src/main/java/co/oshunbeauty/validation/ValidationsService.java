@@ -2,6 +2,7 @@ package co.oshunbeauty.validation;
 
 import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
+import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -62,13 +63,39 @@ public class ValidationsService {
 	
 	public void isBrandValidToUpdate(Brand brand) {
 		if(brand.getBrandId() == null) {
-			throw new BadRequestException("Para actualizar una nueva marca debe existir el id");
+			throw new BadRequestException("Para actualizar una marca debe existir el id");
 		}
 		
 		Set<ConstraintViolation<Brand>> violations = validateMandatoryFields(brand);
 		if(isNotAnEmptyViolations(violations)) {
 			String messagesViolations = getMessagesViolations(violations);
 			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar la marca: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isCustomerValidToSave(Customer customer) {
+		if(customer.getIdentification() == null) {
+			throw new BadRequestException("Para crear un nuevo cliente debe existir la identificacion");
+		}
+		
+		Set<ConstraintViolation<Customer>> violations = validateMandatoryFields(customer);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para crear un cliente: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isCustomerValidToUpdate(Customer customer) {
+		if(customer.getIdentification() == null) {
+			throw new BadRequestException("Para actualizar una nueva marca debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Customer>> violations = validateMandatoryFields(customer);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el cliente: " +
 					messagesViolations);
 		}
 	}

@@ -2,6 +2,7 @@ package co.oshunbeauty.resources;
 
 import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
+import co.oshunbeauty.entity.Customer;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -56,4 +57,28 @@ public class EntitiesMocks {
 
 		return Arrays.asList(brand1, brand2, brand3, brand4);
 	}
+	
+	public static Customer getCustomer() {
+		Customer customer = new Customer("1017215615", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return customer;
+	}
+	
+	public static List<Customer> getCustomers() {
+		Customer customer1 = new Customer("1017215615", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Customer customer2 = new Customer("1017216663", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Customer customer3 = new Customer("71699652", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Customer customer4 = new Customer("43206356", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return Arrays.asList(customer1, customer2, customer3, customer4);
+	}
+	
 }

@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 @Entity(name = "sale_orders")
 public class SaleOrder {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sale_order_id")
@@ -30,6 +30,10 @@ public class SaleOrder {
 	@ManyToOne
 	@JoinColumn(name = "payment_id", nullable = false)
 	private Payment payment;
+	
+	@ManyToOne
+	@JoinColumn(name = "customer_identification")
+	private Customer customer;
 	
 	@Column(name = "last_modified_date", nullable = false)
 	private ZonedDateTime lastModifiedDate;
@@ -117,6 +121,14 @@ public class SaleOrder {
 		this.lastModifiedUser = lastModifiedUser;
 	}
 	
+	public Customer getCustomer() {
+		return customer;
+	}
+	
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
 	@Override
 	public String toString() {
 		return "SaleOrder{" +
@@ -125,6 +137,7 @@ public class SaleOrder {
 				", totalSaleOrderPrice=" + totalSaleOrderPrice +
 				", saleOrderDate=" + saleOrderDate +
 				", payment=" + payment +
+				", customer=" + customer +
 				", lastModifiedDate=" + lastModifiedDate +
 				", creationUser='" + creationUser + '\'' +
 				", lastModifiedUser='" + lastModifiedUser + '\'' +
@@ -136,11 +149,11 @@ public class SaleOrder {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		SaleOrder saleOrder = (SaleOrder) o;
-		return saleOrderId.equals(saleOrder.saleOrderId) && saleOrderNumber.equals(saleOrder.saleOrderNumber) && totalSaleOrderPrice.equals(saleOrder.totalSaleOrderPrice) && saleOrderDate.equals(saleOrder.saleOrderDate) && payment.equals(saleOrder.payment) && lastModifiedDate.equals(saleOrder.lastModifiedDate) && creationUser.equals(saleOrder.creationUser) && lastModifiedUser.equals(saleOrder.lastModifiedUser);
+		return Objects.equals(saleOrderId, saleOrder.saleOrderId) && Objects.equals(saleOrderNumber, saleOrder.saleOrderNumber) && Objects.equals(totalSaleOrderPrice, saleOrder.totalSaleOrderPrice) && Objects.equals(saleOrderDate, saleOrder.saleOrderDate) && Objects.equals(payment, saleOrder.payment) && Objects.equals(customer, saleOrder.customer) && Objects.equals(lastModifiedDate, saleOrder.lastModifiedDate) && Objects.equals(creationUser, saleOrder.creationUser) && Objects.equals(lastModifiedUser, saleOrder.lastModifiedUser);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(saleOrderId, saleOrderNumber, totalSaleOrderPrice, saleOrderDate, payment, lastModifiedDate, creationUser, lastModifiedUser);
+		return Objects.hash(saleOrderId, saleOrderNumber, totalSaleOrderPrice, saleOrderDate, payment, customer, lastModifiedDate, creationUser, lastModifiedUser);
 	}
 }

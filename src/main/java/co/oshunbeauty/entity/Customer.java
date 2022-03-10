@@ -4,21 +4,17 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "customers")
 public class Customer {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "customer_id")
-	private Long customerId;
-	
 	@Column(name = "identification")
 	private String identification;
 	
+	@NotNull
 	@Column(name = "first_name")
 	private String firstName;
 	
@@ -62,14 +58,6 @@ public class Customer {
 		this.lastModifiedDate = lastModifiedDate;
 		this.creationUser = creationUser;
 		this.lastModifiedUser = lastModifiedUser;
-	}
-	
-	public Long getCustomerId() {
-		return customerId;
-	}
-	
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
 	}
 	
 	public String getIdentification() {
@@ -171,8 +159,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer{" +
-				"customerId=" + customerId +
-				", identification='" + identification + '\'' +
+				"identification='" + identification + '\'' +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", address1='" + address1 + '\'' +
@@ -192,12 +179,11 @@ public class Customer {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		Customer customer = (Customer) o;
-		return customerId.equals(customer.customerId) && identification.equals(customer.identification) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(address1, customer.address1) && Objects.equals(address2, customer.address2) && Objects.equals(email, customer.email) && Objects.equals(phoneNumber1, customer.phoneNumber1) && Objects.equals(phoneNumber2, customer.phoneNumber2) && creationDate.equals(customer.creationDate) && lastModifiedDate.equals(customer.lastModifiedDate) && creationUser.equals(customer.creationUser) && lastModifiedUser.equals(customer.lastModifiedUser);
+		return identification.equals(customer.identification) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(address1, customer.address1) && Objects.equals(address2, customer.address2) && Objects.equals(email, customer.email) && Objects.equals(phoneNumber1, customer.phoneNumber1) && Objects.equals(phoneNumber2, customer.phoneNumber2) && Objects.equals(creationDate, customer.creationDate) && Objects.equals(lastModifiedDate, customer.lastModifiedDate) && Objects.equals(creationUser, customer.creationUser) && Objects.equals(lastModifiedUser, customer.lastModifiedUser);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, identification, firstName, lastName, address1, address2, email, phoneNumber1, phoneNumber2, creationDate, lastModifiedDate, creationUser, lastModifiedUser);
+		return Objects.hash(identification, firstName, lastName, address1, address2, email, phoneNumber1, phoneNumber2, creationDate, lastModifiedDate, creationUser, lastModifiedUser);
 	}
-	
 }

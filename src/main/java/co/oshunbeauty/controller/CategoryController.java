@@ -95,12 +95,11 @@ public class CategoryController {
 	}
 	
 	private String getErrorMessageCategoriesAreNotSame(Category category) {
-		return String.format("La categoria con id= %s no fue encontrada o no corresponde a la " +
+		return String.format("La categoria con id %s no fue encontrada o no corresponde a la " +
 				"ingresada", category.getCategoryId());
 	}
 	
-	
 	private String getMessageForCategoryNotFoundException(Long id) {
-		return String.format("La categoria con id= %s no fue encontrada", id);
+		return String.format("La categoria con id %s no fue encontrada", id);
 	}
 }

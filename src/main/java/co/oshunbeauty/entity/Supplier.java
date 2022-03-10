@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "suppliers")
 public class Supplier {
@@ -16,6 +17,7 @@ public class Supplier {
 	@Column(name = "supplier_id")
 	private Long supplierId;
 	
+	@NotNull
 	@Column(name = "name", nullable = false)
 	private String name;
 	

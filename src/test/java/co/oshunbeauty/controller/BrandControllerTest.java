@@ -1,7 +1,6 @@
 package co.oshunbeauty.controller;
 
 import co.oshunbeauty.entity.Brand;
-import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.exception.BadRequestException;
 import co.oshunbeauty.exception.ResourceNotFoundException;
 import co.oshunbeauty.service.BrandService;
@@ -181,6 +180,7 @@ public class BrandControllerTest {
 		// GIVEN
 		Brand brandToUpdate = getBrand();
 		brandToUpdate.setBrandId(BRAND_ID);
+		brandToUpdate.setCompanyName("serenity");
 		
 		Brand brandFound = getBrand();
 		brandFound.setBrandId(BRAND_ID);
@@ -203,7 +203,7 @@ public class BrandControllerTest {
 				() -> assertNotNull(actualBrand.getCreationDate()),
 				() -> assertNotNull(actualBrand.getLastModifiedDate()),
 				() -> assertEquals(BRAND_ID, actualBrand.getBrandId()),
-				() -> assertEquals(NAME, actualBrand.getCompanyName()),
+				() -> assertEquals("serenity", actualBrand.getCompanyName()),
 				() -> assertEquals(USER_TEST, actualBrand.getLastModifiedUser())
 		);
 	}

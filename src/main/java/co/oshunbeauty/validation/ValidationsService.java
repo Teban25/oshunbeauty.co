@@ -5,6 +5,7 @@ import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.entity.Keyword;
 import co.oshunbeauty.entity.Payment;
+import co.oshunbeauty.entity.Supplier;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -150,6 +151,32 @@ public class ValidationsService {
 		if(isNotAnEmptyViolations(violations)) {
 			String messagesViolations = getMessagesViolations(violations);
 			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el tipo de pago: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isSupplierValidToSave(Supplier supplier) {
+		if(supplier.getSupplierId() != null) {
+			throw new BadRequestException("Para crear un nuevo proveedor no debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Supplier>> violations = validateMandatoryFields(supplier);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para crear un nuevo proveedor: "
+					+ messagesViolations);
+		}
+	}
+	
+	public void isSupplierValidToUpdate(Supplier supplier) {
+		if(supplier.getSupplierId() == null) {
+			throw new BadRequestException("Para actualizar un proveedor debe existir al menos el id");
+		}
+		
+		Set<ConstraintViolation<Supplier>> violations = validateMandatoryFields(supplier);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el proveedor: " +
 					messagesViolations);
 		}
 	}

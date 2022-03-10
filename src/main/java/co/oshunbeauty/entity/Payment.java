@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "payments")
 public class Payment {
@@ -16,6 +17,7 @@ public class Payment {
 	@Column(name = "payment_id")
 	private Long paymentId;
 	
+	@NotNull
 	@Column(name = "payment_type", nullable = false)
 	private String paymentType;
 	

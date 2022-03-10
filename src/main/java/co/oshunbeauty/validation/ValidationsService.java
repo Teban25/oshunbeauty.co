@@ -4,6 +4,7 @@ import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.entity.Keyword;
+import co.oshunbeauty.entity.Payment;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -89,7 +90,7 @@ public class ValidationsService {
 	}
 	
 	public void isCustomerValidToUpdate(Customer customer) {
-		if(customer.getIdentification() == null) {
+		if(customer.getIdentification() == null || customer.getIdentification().isEmpty()) {
 			throw new BadRequestException("Para actualizar una nueva marca debe existir el id");
 		}
 		
@@ -115,7 +116,7 @@ public class ValidationsService {
 	}
 	
 	public void isKeywordValidToUpdate(Keyword keyword) {
-		if(keyword.getKey() == null) {
+		if(keyword.getKeywordId() == null) {
 			throw new BadRequestException("Para actualizar una palabra clave debe existir el id");
 		}
 		
@@ -123,6 +124,32 @@ public class ValidationsService {
 		if(isNotAnEmptyViolations(violations)) {
 			String messagesViolations = getMessagesViolations(violations);
 			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar la palabra clave: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isPaymentValidToSave(Payment payment) {
+		if(payment.getPaymentId() != null) {
+			throw new BadRequestException("Para crear un nuevo tipo de pago no debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Payment>> violations = validateMandatoryFields(payment);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para crear un nuevo tipo de pago: "
+					+ messagesViolations);
+		}
+	}
+	
+	public void isPaymentValidToUpdate(Payment payment) {
+		if(payment.getPaymentId() == null) {
+			throw new BadRequestException("Para actualizar un tipo de pago debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Payment>> violations = validateMandatoryFields(payment);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el tipo de pago: " +
 					messagesViolations);
 		}
 	}

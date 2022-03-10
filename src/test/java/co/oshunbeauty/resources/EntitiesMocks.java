@@ -4,6 +4,7 @@ import co.oshunbeauty.entity.Brand;
 import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.entity.Keyword;
+import co.oshunbeauty.entity.Payment;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -103,5 +104,28 @@ public class EntitiesMocks {
 				"test", "test");
 		
 		return Arrays.asList(keyword1, keyword2, keyword3, keyword4);
+	}
+	
+	public static Payment getPayment() {
+		Payment payment = new Payment("efectivo", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return payment;
+	}
+	
+	public static List<Payment> getPayments() {
+		Payment payment1 = new Payment("efectivo", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Payment payment2 = new Payment("transferencia bancaria", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Payment payment3 = new Payment("QR", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		Payment payment4 = new Payment("datafono", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				"test", "test");
+		
+		return Arrays.asList(payment1, payment2, payment3, payment4);
 	}
 }

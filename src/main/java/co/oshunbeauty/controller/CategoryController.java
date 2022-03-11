@@ -73,8 +73,8 @@ public class CategoryController {
 		return categoryService.updateCategory(currentCategoryFound.get(), category, "oshun");
 	}
 	
-	@DeleteMapping
-	public void deleteCategory(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public void deleteCategory(@PathVariable final Long id) {
 		Optional<Category> currentCategory = categoryService.getCategoryById(id);
 		
 		if(currentCategory.isEmpty()) {

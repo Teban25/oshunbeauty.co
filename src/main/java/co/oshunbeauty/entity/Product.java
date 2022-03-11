@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity(name="products")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -20,9 +21,11 @@ public class Product {
     @Column(name = "product_id")
     private Long productId;
     
+    // TODO add index for this column
     @Column(name = "barcode")
     private String barcode;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
@@ -32,16 +35,18 @@ public class Product {
     joinColumns = @JoinColumn(name = "product_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
-
+    
+    // TODO add index for this column
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
-
+    
     @Column(name = "current_amount")
     private Integer currentAmount;
-
+    
     @Column(name = "current_price")
     private Double currentPrice;
 

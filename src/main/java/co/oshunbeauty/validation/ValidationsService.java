@@ -5,6 +5,7 @@ import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.entity.Keyword;
 import co.oshunbeauty.entity.Payment;
+import co.oshunbeauty.entity.Product;
 import co.oshunbeauty.entity.Supplier;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.Set;
@@ -177,6 +178,32 @@ public class ValidationsService {
 		if(isNotAnEmptyViolations(violations)) {
 			String messagesViolations = getMessagesViolations(violations);
 			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el proveedor: " +
+					messagesViolations);
+		}
+	}
+	
+	public void isProductValidToSave(Product product) {
+		if(product.getProductId() != null) {
+			throw new BadRequestException("Para crear un nuevo producto no debe existir el id");
+		}
+		
+		Set<ConstraintViolation<Product>> violations = validateMandatoryFields(product);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para crear un nuevo producto: "
+					+ messagesViolations);
+		}
+	}
+	
+	public void isProductValidToUpdate(Product product) {
+		if(product.getProductId() == null) {
+			throw new BadRequestException("Para actualizar un producto debe existir al menos el id");
+		}
+		
+		Set<ConstraintViolation<Product>> violations = validateMandatoryFields(product);
+		if(isNotAnEmptyViolations(violations)) {
+			String messagesViolations = getMessagesViolations(violations);
+			throw new BadRequestException("No se aceptaron las validaciones minimas para actualizar el producto: " +
 					messagesViolations);
 		}
 	}

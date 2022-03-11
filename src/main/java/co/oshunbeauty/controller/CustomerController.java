@@ -67,8 +67,8 @@ public class CustomerController {
 		return customerService.updateCustomer(currentCustomerFound.get(), customer, "oshun");
 	}
 	
-	@DeleteMapping
-	public void deleteCustomer(@PathVariable String id) {
+	@DeleteMapping("/{id}")
+	public void deleteCustomer(@PathVariable final String id) {
 		Optional<Customer> currentCustomer = customerService.getCustomerById(id);
 		
 		if(currentCustomer.isEmpty()) {

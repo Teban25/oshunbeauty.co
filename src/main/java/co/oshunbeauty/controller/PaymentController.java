@@ -67,8 +67,8 @@ public class PaymentController {
 		return paymentService.updatePayment(currentPaymentFound.get(), payment, "oshun");
 	}
 	
-	@DeleteMapping
-	public void deletePayment(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public void deletePayment(@PathVariable final Long id) {
 		Optional<Payment> currentPaymentFound = paymentService.getPaymentById(id);
 		if(currentPaymentFound.isEmpty()) {
 			log.error("The payment with id {} was not found.", id);

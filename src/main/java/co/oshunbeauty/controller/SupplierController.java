@@ -73,8 +73,8 @@ public class SupplierController {
 		return supplierService.updateSupplier(currentSupplierFound.get(), supplier, "oshun");
 	}
 	
-	@DeleteMapping
-	public void deleteSupplier(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public void deleteSupplier(@PathVariable final Long id) {
 		Optional<Supplier> currentSupplierFound = supplierService.getSupplierById(id);
 		if(currentSupplierFound.isEmpty()) {
 			log.error("The supplier with id {} was not found.", id);

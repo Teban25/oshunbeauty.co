@@ -5,6 +5,7 @@ import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.entity.Keyword;
 import co.oshunbeauty.entity.Payment;
+import co.oshunbeauty.entity.Product;
 import co.oshunbeauty.entity.Supplier;
 import co.oshunbeauty.exception.BadRequestException;
 import java.util.HashSet;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static co.oshunbeauty.resources.EntitiesMocks.getBrand;
@@ -24,6 +24,7 @@ import static co.oshunbeauty.resources.EntitiesMocks.getCategory;
 import static co.oshunbeauty.resources.EntitiesMocks.getCustomer;
 import static co.oshunbeauty.resources.EntitiesMocks.getKeyword;
 import static co.oshunbeauty.resources.EntitiesMocks.getPayment;
+import static co.oshunbeauty.resources.EntitiesMocks.getProduct;
 import static co.oshunbeauty.resources.EntitiesMocks.getSupplier;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -423,9 +424,7 @@ public class ValidationsServiceTest {
 		// THEN
 		verify(validator, times(1)).validate(any());
 	}
-	
-	// suppliers
-	
+
 	@Test
 	public void shouldAcceptIsSupplierValidToSave() {
 		// GIVEN
@@ -497,6 +496,82 @@ public class ValidationsServiceTest {
 		when(constraintViolationMock.getMessage()).thenReturn("TestMessage");
 		when(validator.validate(any())).thenReturn(constrains);
 		assertThrows(BadRequestException.class, () -> validationsService.isSupplierValidToUpdate(supplier));
+		// THEN
+		verify(validator, times(1)).validate(any());
+	}
+	
+	// products
+	@Test
+	public void shouldAcceptIsProductValidToSave() {
+		// GIVEN
+		Product product = getProduct();
+		// WHEN
+		when(validator.validate(any())).thenReturn(new HashSet<>());
+		validationsService.isProductValidToSave(product);
+		// THEN
+		verify(validator, times(1)).validate(any());
+	}
+	
+	@Test
+	public void shouldRejectIsProductValidToSaveWhenItHasNotNullId() {
+		// GIVEN
+		Product product = getProduct();
+		product.setProductId(1L);
+		// WHEN
+		assertThrows(BadRequestException.class, () -> validationsService.isProductValidToSave(product));
+		// THEN
+		verifyNoInteractions(validator);
+	}
+	
+	@Test
+	public void shouldRejectIsProductValidToSaveDueToConstrains() {
+		// GIVEN
+		Product product = getProduct();
+		product.setName(null);
+		// WHEN
+		when(path.toString()).thenReturn("TestField");
+		when(constraintViolationMock.getPropertyPath()).thenReturn(path);
+		when(constraintViolationMock.getMessage()).thenReturn("TestMessage");
+		when(validator.validate(any())).thenReturn(constrains);
+		assertThrows(BadRequestException.class, () -> validationsService.isProductValidToSave(product));
+		// THEN
+		verify(validator, times(1)).validate(any());
+	}
+	
+	@Test
+	public void shouldAcceptIsProductValidToUpdate() {
+		// GIVEN
+		Product product = getProduct();
+		product.setProductId(1L);
+		// WHEN
+		when(validator.validate(any())).thenReturn(new HashSet<>());
+		validationsService.isProductValidToUpdate(product);
+		// THEN
+		verify(validator, times(1)).validate(any());
+	}
+	
+	@Test
+	public void shouldRejectIsProductValidToUpdateWhenItHasNullId() {
+		// GIVEN
+		Product product = getProduct();
+		// WHEN
+		assertThrows(BadRequestException.class, () -> validationsService.isProductValidToUpdate(product));
+		// THEN
+		verifyNoInteractions(validator);
+	}
+	
+	@Test
+	public void shouldRejectIsProductValidToUpdateDueToConstrains() {
+		// GIVEN
+		Product product = getProduct();
+		product.setProductId(1L);
+		product.setName(null);
+		// WHEN
+		when(path.toString()).thenReturn("TestField");
+		when(constraintViolationMock.getPropertyPath()).thenReturn(path);
+		when(constraintViolationMock.getMessage()).thenReturn("TestMessage");
+		when(validator.validate(any())).thenReturn(constrains);
+		assertThrows(BadRequestException.class, () -> validationsService.isProductValidToUpdate(product));
 		// THEN
 		verify(validator, times(1)).validate(any());
 	}

@@ -73,8 +73,8 @@ public class KeywordController {
 		return keywordService.updateKeyword(currentKeywordFound.get(), keyword, "oshun");
 	}
 	
-	@DeleteMapping
-	public void deleteKeyword(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public void deleteKeyword(@PathVariable final Long id) {
 		Optional<Keyword> currentKeywordFound = keywordService.getKeywordById(id);
 		if(currentKeywordFound.isEmpty()) {
 			log.error("The keyword with id {} was not found.", id);

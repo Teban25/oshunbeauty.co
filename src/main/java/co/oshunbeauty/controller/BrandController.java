@@ -73,8 +73,8 @@ public class BrandController {
 		return brandService.updateBrand(currentBrandFound.get(), brand, "oshun");
 	}
 	
-	@DeleteMapping
-	public void deleteBrand(@PathVariable Long id) {
+	@DeleteMapping("/{id}")
+	public void deleteBrand(@PathVariable final Long id) {
 		Optional<Brand> currentBrandFound = brandService.getBrandById(id);
 		if(currentBrandFound.isEmpty()) {
 			log.error("The brand with id {} was not found.", id);

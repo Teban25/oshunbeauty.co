@@ -5,6 +5,7 @@ import co.oshunbeauty.entity.Category;
 import co.oshunbeauty.entity.Customer;
 import co.oshunbeauty.entity.Keyword;
 import co.oshunbeauty.entity.Payment;
+import co.oshunbeauty.entity.Product;
 import co.oshunbeauty.entity.Supplier;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -153,5 +154,28 @@ public class EntitiesMocks {
 				USER_TEST, USER_TEST);
 		
 		return Arrays.asList(supplier1, supplier2, supplier3, supplier4);
+	}
+	
+	public static Product getProduct() {
+		Product product = new Product(getBrand(),"agua de rosas 250 ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				USER_TEST, USER_TEST);
+		
+		return product;
+	}
+	
+	public static List<Product> getProducts() {
+		Product product1 = new Product(getBrand(),"agua de rosas 250 ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				USER_TEST, USER_TEST);
+		
+		Product product2 = new Product(getBrand(),"agua de rosas 500 ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				USER_TEST, USER_TEST);
+		
+		Product product3 = new Product(getBrand(),"agua de rosas 1000 ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				USER_TEST, USER_TEST);
+		
+		Product product4 = new Product(getBrand(),"aceite de almendras 250 ml", ZonedDateTime.now(ZONE_ID), ZonedDateTime.now(ZONE_ID),
+				USER_TEST, USER_TEST);
+		
+		return Arrays.asList(product1, product2, product3, product4);
 	}
 }

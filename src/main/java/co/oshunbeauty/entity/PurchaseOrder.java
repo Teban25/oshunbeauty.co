@@ -1,7 +1,9 @@
 package co.oshunbeauty.entity;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity(name = "purchase_orders")
+@DynamicInsert
 public class PurchaseOrder {
 	
 	@Id
@@ -34,6 +39,11 @@ public class PurchaseOrder {
 	@ManyToOne
 	@JoinColumn(name = "payment_id", nullable = false)
 	private Payment payment;
+	
+	//@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+	@OneToMany(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "purchase_order_id")
+	private List<PurchaseOrderDetail> purchaseOrderDetails;
 	
 	@Column(name = "last_modified_date", nullable = false)
 	private ZonedDateTime lastModifiedDate;
@@ -130,6 +140,14 @@ public class PurchaseOrder {
 		this.lastModifiedUser = lastModifiedUser;
 	}
 	
+	public List<PurchaseOrderDetail> getPurchaseOrderDetails() {
+		return purchaseOrderDetails;
+	}
+	
+	public void setPurchaseOrderDetails(List<PurchaseOrderDetail> purchaseOrderDetails) {
+		this.purchaseOrderDetails = purchaseOrderDetails;
+	}
+	
 	@Override
 	public String toString() {
 		return "PurchaseOrder{" +
@@ -139,6 +157,7 @@ public class PurchaseOrder {
 				", purchaseOrderDate=" + purchaseOrderDate +
 				", supplier=" + supplier +
 				", payment=" + payment +
+				", purchaseOrderDetails=" + purchaseOrderDetails +
 				", lastModifiedDate=" + lastModifiedDate +
 				", creationUser='" + creationUser + '\'' +
 				", lastModifiedUser='" + lastModifiedUser + '\'' +
@@ -150,11 +169,11 @@ public class PurchaseOrder {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		PurchaseOrder that = (PurchaseOrder) o;
-		return purchaseOrderId.equals(that.purchaseOrderId) && purchaseOrderNumber.equals(that.purchaseOrderNumber) && totalPurchaseOrderPrice.equals(that.totalPurchaseOrderPrice) && purchaseOrderDate.equals(that.purchaseOrderDate) && supplier.equals(that.supplier) && payment.equals(that.payment) && lastModifiedDate.equals(that.lastModifiedDate) && creationUser.equals(that.creationUser) && lastModifiedUser.equals(that.lastModifiedUser);
+		return Objects.equals(purchaseOrderId, that.purchaseOrderId) && Objects.equals(purchaseOrderNumber, that.purchaseOrderNumber) && Objects.equals(totalPurchaseOrderPrice, that.totalPurchaseOrderPrice) && Objects.equals(purchaseOrderDate, that.purchaseOrderDate) && Objects.equals(supplier, that.supplier) && Objects.equals(payment, that.payment) && Objects.equals(purchaseOrderDetails, that.purchaseOrderDetails) && Objects.equals(lastModifiedDate, that.lastModifiedDate) && Objects.equals(creationUser, that.creationUser) && Objects.equals(lastModifiedUser, that.lastModifiedUser);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(purchaseOrderId, purchaseOrderNumber, totalPurchaseOrderPrice, purchaseOrderDate, supplier, payment, lastModifiedDate, creationUser, lastModifiedUser);
+		return Objects.hash(purchaseOrderId, purchaseOrderNumber, totalPurchaseOrderPrice, purchaseOrderDate, supplier, payment, purchaseOrderDetails, lastModifiedDate, creationUser, lastModifiedUser);
 	}
 }

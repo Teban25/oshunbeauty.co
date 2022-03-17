@@ -39,6 +39,10 @@ public class SupplierService {
 		return supplierRepository.findSuppliersByName(name);
 	}
 	
+	public List<Supplier> getSuppliersByNameFromExcel(String name) {
+		return supplierRepository.findSuppliersByNameFromExcel(name);
+	}
+	
 	public Supplier saveSupplier(Supplier supplier, String user) {
 		supplier.setCreationDate(ZonedDateTime.now(ZONE_ID));
 		supplier.setLastModifiedDate(ZonedDateTime.now(ZONE_ID));

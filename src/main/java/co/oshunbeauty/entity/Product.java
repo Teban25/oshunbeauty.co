@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,10 +20,10 @@ import javax.validation.constraints.NotNull;
 public class Product {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long productId;
     
-    // TODO add index for this column
     @Column(name = "barcode")
     private String barcode;
 
@@ -36,7 +38,6 @@ public class Product {
     inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
     
-    // TODO add index for this column
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;

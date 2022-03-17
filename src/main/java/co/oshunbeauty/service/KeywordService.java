@@ -60,4 +60,8 @@ public class KeywordService {
 	public void deleteKeyword(Keyword keyword) {
 		keywordRepository.delete(keyword);
 	}
+	
+	public Optional<Keyword> getKeywordByKeyAndValue(String key, String value){
+		return keywordRepository.findKeywordByKeyAndValue(key, value);
+	}
 }

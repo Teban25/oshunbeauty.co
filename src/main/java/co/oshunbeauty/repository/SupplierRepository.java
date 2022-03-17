@@ -12,4 +12,7 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM suppliers s WHERE s.name LIKE '%' || :name || '%' ")
 	List<Supplier> findSuppliersByName(@Param("name") String name);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM suppliers s WHERE s.name = :name ")
+	List<Supplier> findSuppliersByNameFromExcel(@Param("name") String name);
 }

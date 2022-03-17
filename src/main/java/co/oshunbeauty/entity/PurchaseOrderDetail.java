@@ -2,6 +2,7 @@ package co.oshunbeauty.entity;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,13 +19,9 @@ public class PurchaseOrderDetail {
 	@Column(name = "purchase_order_detail_id")
 	private Long purchaseOrderDetailId;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
-	
-	@ManyToOne
-	@JoinColumn(name = "purchase_order_id", nullable = false)
-	private PurchaseOrder purchaseOrder;
 	
 	@Column(name = "unit_price", nullable = false)
 	private Double unitPrice;
@@ -50,10 +47,9 @@ public class PurchaseOrderDetail {
 	public PurchaseOrderDetail() {
 	}
 	
-	public PurchaseOrderDetail(Product product, PurchaseOrder purchaseOrder, Double unitPrice, Integer quantity,
+	public PurchaseOrderDetail(Product product, Double unitPrice, Integer quantity,
 	                           Double total, ZonedDateTime purchaseOrderDetailDate, ZonedDateTime lastModifiedDate, String creationUser, String lastModifiedUser) {
 		this.product = product;
-		this.purchaseOrder = purchaseOrder;
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 		this.total = total;
@@ -77,14 +73,6 @@ public class PurchaseOrderDetail {
 	
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-	
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
-	}
-	
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
 	}
 	
 	public Double getUnitPrice() {
@@ -148,7 +136,6 @@ public class PurchaseOrderDetail {
 		return "PurchaseOrderDetail{" +
 				"purchaseOrderDetailId=" + purchaseOrderDetailId +
 				", product=" + product +
-				", purchaseOrder=" + purchaseOrder +
 				", unitPrice=" + unitPrice +
 				", quantity=" + quantity +
 				", total=" + total +
@@ -164,11 +151,11 @@ public class PurchaseOrderDetail {
 		if(this == o) return true;
 		if(o == null || getClass() != o.getClass()) return false;
 		PurchaseOrderDetail that = (PurchaseOrderDetail) o;
-		return purchaseOrderDetailId.equals(that.purchaseOrderDetailId) && product.equals(that.product) && purchaseOrder.equals(that.purchaseOrder) && unitPrice.equals(that.unitPrice) && quantity.equals(that.quantity) && total.equals(that.total) && purchaseOrderDetailDate.equals(that.purchaseOrderDetailDate) && lastModifiedDate.equals(that.lastModifiedDate) && creationUser.equals(that.creationUser) && lastModifiedUser.equals(that.lastModifiedUser);
+		return Objects.equals(purchaseOrderDetailId, that.purchaseOrderDetailId) && Objects.equals(product, that.product) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(quantity, that.quantity) && Objects.equals(total, that.total) && Objects.equals(purchaseOrderDetailDate, that.purchaseOrderDetailDate) && Objects.equals(lastModifiedDate, that.lastModifiedDate) && Objects.equals(creationUser, that.creationUser) && Objects.equals(lastModifiedUser, that.lastModifiedUser);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(purchaseOrderDetailId, product, purchaseOrder, unitPrice, quantity, total, purchaseOrderDetailDate, lastModifiedDate, creationUser, lastModifiedUser);
+		return Objects.hash(purchaseOrderDetailId, product, unitPrice, quantity, total, purchaseOrderDetailDate, lastModifiedDate, creationUser, lastModifiedUser);
 	}
 }

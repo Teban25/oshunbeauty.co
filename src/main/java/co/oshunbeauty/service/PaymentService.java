@@ -56,4 +56,8 @@ public class PaymentService {
 	public void deletePayment(Payment payment) {
 		paymentRepository.delete(payment);
 	}
+	
+	public Optional<Payment> getPaymentByNameFromExcel(String paymentName) {
+		return paymentRepository.findPaymentByNameFromExcel(paymentName);
+	}
 }

@@ -187,10 +187,10 @@ public class PurchaseOrderService {
 			productSaved = currentProductFromDataBase;
 			//productSaved = productService.updateProductFromExcel(currentProductFromDataBase, user);
 		} else {
-			String categoriesNames = currentRow.getCell(0).getStringCellValue();
+			String categoriesNames = getCategoriesValueFromCell(currentRow);
 			productFromExcel.setCategories(getCategoriesResourcesToAddProduct(categoriesNames));
 			
-			String keywords = currentRow.getCell(1).getStringCellValue();
+			String keywords = getKeywordsValueFromCell(currentRow);
 			productFromExcel.setKeywords(getKeywordsResourcesToAddProduct(keywords));
 			productFromExcel.setLastModifiedDate(ZonedDateTime.now(ZONE_ID));
 			productFromExcel.setLastModifiedUser(user);
@@ -203,6 +203,22 @@ public class PurchaseOrderService {
 		}
 		
 		return productSaved;
+	}
+	
+	private String getKeywordsValueFromCell(Row currentRow) {
+		String keywords = "";
+		if(currentRow.getCell(1) != null) {
+			keywords = currentRow.getCell(1).getStringCellValue();
+		}
+		return keywords;
+	}
+	
+	private String getCategoriesValueFromCell(Row currentRow) {
+		String categories = "";
+		if(currentRow.getCell(0) != null) {
+			categories = currentRow.getCell(0).getStringCellValue();
+		}
+		return categories;
 	}
 	
 	private Optional<Product> loadProductFromDataBase(Product productFromExcel) {

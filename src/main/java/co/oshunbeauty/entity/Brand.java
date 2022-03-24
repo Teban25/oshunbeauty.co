@@ -1,14 +1,21 @@
 package co.oshunbeauty.entity;
 
 import java.time.ZonedDateTime;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity(name = "brands")
 public class Brand {
 
@@ -35,9 +42,6 @@ public class Brand {
 
     @Column(name = "last_modified_user", nullable = false)
     private String lastModifiedUser;
-    
-    public Brand() {
-    }
     
     public Brand(String companyName, ZonedDateTime creationDate, ZonedDateTime lastModifiedDate,
                  String creationUser, String lastModifiedUser) {
@@ -102,31 +106,5 @@ public class Brand {
     
     public void setLastModifiedUser(String lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
-    }
-    
-    @Override
-    public String toString() {
-        return "Brand{" +
-                "brandId=" + brandId +
-                ", companyName='" + companyName + '\'' +
-                ", description='" + description + '\'' +
-                ", creationDate=" + creationDate +
-                ", lastModifiedDate=" + lastModifiedDate +
-                ", creationUser='" + creationUser + '\'' +
-                ", lastModifiedUser='" + lastModifiedUser + '\'' +
-                '}';
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
-        Brand brand = (Brand) o;
-        return brandId.equals(brand.brandId) && companyName.equals(brand.companyName) && Objects.equals(description, brand.description) && creationDate.equals(brand.creationDate) && lastModifiedDate.equals(brand.lastModifiedDate) && creationUser.equals(brand.creationUser) && lastModifiedUser.equals(brand.lastModifiedUser);
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(brandId, companyName, description, creationDate, lastModifiedDate, creationUser, lastModifiedUser);
     }
 }

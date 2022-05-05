@@ -10,21 +10,21 @@ import org.springframework.context.annotation.Configuration;
 public class DataSourceConfig {
 	
 	@Value("${spring.datasource.url}")
-	private String url2;
+	private String url;
 	
 	@Value("${spring.datasource.username}")
-	private String userName2;
+	private String userName;
 	
 	@Value("${spring.datasource.password}")
-	private String password2;
+	private String password;
 	
 	@Bean
 	public DataSource getDataSource() {
 		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 		dataSourceBuilder.driverClassName("org.postgresql.Driver")
-				.url(url2)
-				.username(userName2)
-				.password(password2);
+				.url(url)
+				.username(userName)
+				.password(password);
 		
 		return dataSourceBuilder.build();
 	}

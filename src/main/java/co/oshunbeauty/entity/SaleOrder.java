@@ -1,6 +1,8 @@
 package co.oshunbeauty.entity;
 
 import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,16 +10,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity(name = "sale_orders")
+@DynamicInsert
+@DynamicUpdate
 public class SaleOrder {
 
 	@Id
@@ -47,6 +54,10 @@ public class SaleOrder {
 	@ManyToOne
 	@JoinColumn(name = "customer_identification")
 	private Customer customer;
+	
+	@OneToMany(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "sale_order_id")
+	private List<SaleOrderDetails> saleOrderDetails;
 	
 	@Column(name = "last_modified_date", nullable = false)
 	private ZonedDateTime lastModifiedDate;

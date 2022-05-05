@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -46,12 +47,14 @@ public class PurchaseOrderService {
 	private PaymentService paymentService;
 	private SupplierService supplierService;
 	private PurchaseOrderRepository purchaseOrderRepository;
+	private PurchaseOrderDetailRepository purchaseOrderDetailRepository;
 	
 	@Autowired
 	public PurchaseOrderService(BrandService brandService, CategoryService categoryService,
 	                            KeywordService keywordService, ExcelHelper excelHelper,
 	                            ProductService productService, PaymentService paymentService,
-	                            SupplierService supplierService, PurchaseOrderRepository purchaseOrderRepository) {
+	                            SupplierService supplierService, PurchaseOrderRepository purchaseOrderRepository,
+	                            PurchaseOrderDetailRepository purchaseOrderDetailRepository) {
 		this.brandService = brandService;
 		this.categoryService = categoryService;
 		this.keywordService = keywordService;
@@ -60,6 +63,7 @@ public class PurchaseOrderService {
 		this.paymentService = paymentService;
 		this.supplierService = supplierService;
 		this.purchaseOrderRepository = purchaseOrderRepository;
+		this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
 	}
 	
 	@Transactional(propagation = Propagation.NESTED)
@@ -156,12 +160,31 @@ public class PurchaseOrderService {
 	private PurchaseOrderDetail loadPurchaseDetailFromExcel(Product productLoaded, Row currentRow, String user) {
 		Integer quantity = Double.valueOf(currentRow.getCell(2).getNumericCellValue()).intValue();
 		Double supplierPrice = currentRow.getCell(3).getNumericCellValue();
+		Double unitSellPrice = currentRow.getCell(6).getNumericCellValue();
+		
+		AtomicBoolean activePrice = new AtomicBoolean(false);
+		if(productLoaded.getProductId() == null) {
+			activePrice.set(true);
+		} else {
+			Optional<PurchaseOrderDetail> currentPurchaseOrderDetailOptional =
+					purchaseOrderDetailRepository.findOrderByProductId(productLoaded.getProductId());
+			
+			currentPurchaseOrderDetailOptional.ifPresentOrElse(order -> activePrice.set(false),
+					() -> {
+				activePrice.set(true);
+				productLoaded.setCurrentPrice(unitSellPrice);
+				productLoaded.setCurrentAmount(quantity);
+			});
+		}
 		
 		PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail();
 		purchaseOrderDetail.setProduct(productLoaded);
 		purchaseOrderDetail.setQuantity(quantity);
+		purchaseOrderDetail.setQuantitySold(0);
 		purchaseOrderDetail.setUnitPrice(supplierPrice);
+		purchaseOrderDetail.setUnitSellPrice(unitSellPrice);
 		purchaseOrderDetail.setTotal(quantity*supplierPrice);
+		purchaseOrderDetail.setActivePrice(activePrice.get());
 		purchaseOrderDetail.setPurchaseOrderDetailDate(ZonedDateTime.now(ZONE_ID));
 		purchaseOrderDetail.setLastModifiedDate(ZonedDateTime.now(ZONE_ID));
 		purchaseOrderDetail.setCreationUser(user);
@@ -176,16 +199,9 @@ public class PurchaseOrderService {
 		
 		if(productOptFromDataBase.isPresent()) {
 			Product currentProductFromDataBase = productOptFromDataBase.get();
-			Integer addAmountToInventory = currentProductFromDataBase.getCurrentAmount() + productFromExcel.getCurrentAmount();
-			currentProductFromDataBase.setCurrentAmount(addAmountToInventory);
-			
-			if(currentProductFromDataBase.getCurrentPrice() != productFromExcel.getCurrentPrice()) {
-				currentProductFromDataBase.setCurrentPrice(productFromExcel.getCurrentPrice());
-			}
 			currentProductFromDataBase.setLastModifiedDate(ZonedDateTime.now(ZONE_ID));
 			currentProductFromDataBase.setLastModifiedUser(user);
 			productSaved = currentProductFromDataBase;
-			//productSaved = productService.updateProductFromExcel(currentProductFromDataBase, user);
 		} else {
 			String categoriesNames = getCategoriesValueFromCell(currentRow);
 			productFromExcel.setCategories(getCategoriesResourcesToAddProduct(categoriesNames));
@@ -199,7 +215,6 @@ public class PurchaseOrderService {
 			productFromExcel.setCreationUser(user);
 			productFromExcel.setLastModifiedUser(user);
 			productSaved = productFromExcel;
-			//productSaved = productService.saveProduct(productFromExcel, user);
 		}
 		
 		return productSaved;

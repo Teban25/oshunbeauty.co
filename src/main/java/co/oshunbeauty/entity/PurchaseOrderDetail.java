@@ -30,8 +30,17 @@ public class PurchaseOrderDetail {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
+	@Column(name = "quantity_sold", nullable = false)
+	private Integer quantitySold;
+	
+	@Column(name = "active_price", nullable = false)
+	private Boolean activePrice;
+	
 	@Column(name = "unit_price", nullable = false)
 	private Double unitPrice;
+	
+	@Column(name = "unit_sell_price", nullable = false)
+	private Double unitSellPrice;
 	
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;

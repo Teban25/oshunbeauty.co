@@ -1,6 +1,7 @@
 package co.oshunbeauty.entity;
 
 import java.time.ZonedDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,13 +26,13 @@ public class SaleOrderDetails {
 	@Column(name = "sale_order_detail_id")
 	private Long saleOrderDetailId;
 	
-	@ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
+	@ManyToOne(cascade = {CascadeType.MERGE})
+	@JoinColumn(name = "product_id", updatable = true, nullable = false)
 	private Product product;
 	
 	@ManyToOne
-	@JoinColumn(name = "sale_order_id", nullable = false)
-	private SaleOrder saleOrder;
+	@JoinColumn(name = "purchase_order_detail_id", nullable = false)
+	private PurchaseOrderDetail associatePurchaseOrderDetail;
 	
 	@Column(name = "unit_price", nullable = false)
 	private Double unitPrice;
@@ -54,11 +55,10 @@ public class SaleOrderDetails {
 	@Column(name = "last_modified_user", nullable = false)
 	private String lastModifiedUser;
 	
-	public SaleOrderDetails(Product product, SaleOrder saleOrder, Double unitPrice, Integer quantity, Double total,
+	public SaleOrderDetails(Product product, Double unitPrice, Integer quantity, Double total,
 	                        ZonedDateTime saleOrderDetailDate, ZonedDateTime lastModifiedDate, String creationUser,
 	                        String lastModifiedUser) {
 		this.product = product;
-		this.saleOrder = saleOrder;
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 		this.total = total;

@@ -64,6 +64,12 @@ public class ProductController {
 	
 	@GetMapping("/names")
 	public List<Product> getProductsByName(@RequestParam final String name) {
+		List<Product> productsByName = productService.getProductsByName(name);
+		
+		if(productsByName == null || productsByName.isEmpty()) {
+			log.error("The products with name {} were not found.", name);
+			throw new ResourceNotFoundException(getMessageForProductsNotFoundByNameException(name));
+		}
 		return productService.getProductsByName(name);
 	}
 	
@@ -118,5 +124,9 @@ public class ProductController {
 	
 	private String getMessageForProductNotFoundByBarcodeException(String barCode) {
 		return String.format("El producto con el código de barras %s no fue encontrado", barCode);
+	}
+	
+	private String getMessageForProductsNotFoundByNameException(String name) {
+		return String.format("No fueron encontrados productos con el nombre %s", name);
 	}
 }

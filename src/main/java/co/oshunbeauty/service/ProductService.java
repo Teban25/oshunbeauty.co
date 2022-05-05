@@ -63,7 +63,8 @@ public class ProductService {
 		return productRepository.save(currentProduct);
 	}
 	
-	public Product updateProductFromExcel(Product currentProduct, String user) {
+	public Product updateProduct(Product currentProduct, String user) {
+		
 		currentProduct.setLastModifiedDate(ZonedDateTime.now(ZONE_ID));
 		currentProduct.setLastModifiedUser(user);
 		

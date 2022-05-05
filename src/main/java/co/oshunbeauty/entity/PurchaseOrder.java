@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +24,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Builder
 @Entity(name = "purchase_orders")
 @DynamicInsert
+@DynamicUpdate
 public class PurchaseOrder {
 	
 	@Id

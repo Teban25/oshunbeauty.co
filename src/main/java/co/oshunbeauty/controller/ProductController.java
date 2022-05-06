@@ -70,7 +70,7 @@ public class ProductController {
 			log.error("The products with name {} were not found.", name);
 			throw new ResourceNotFoundException(getMessageForProductsNotFoundByNameException(name));
 		}
-		return productService.getProductsByName(name);
+		return productsByName;
 	}
 	
 	@PostMapping

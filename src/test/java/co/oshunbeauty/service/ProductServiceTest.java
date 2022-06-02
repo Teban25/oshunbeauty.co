@@ -2,6 +2,7 @@ package co.oshunbeauty.service;
 
 import co.oshunbeauty.entity.Product;
 import co.oshunbeauty.repository.ProductRepository;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -89,15 +90,17 @@ public class ProductServiceTest {
 		Product productToFind = getProduct();
 		productToFind.setProductId(productId);
 		productToFind.setBarcode(barCode);
+		List<Product> productsToFind = new LinkedList<>();
+		productsToFind.add(productToFind);
 		// When
-		Mockito.when(productRepository.findProductByBarcode(any(String.class))).thenReturn(Optional.of(productToFind));
-		Optional<Product> currentProduct = productService.getProductByBarcode(barCode);
+		Mockito.when(productRepository.findProductByBarcode(any(String.class))).thenReturn(productsToFind);
+		List<Product> currentProduct = productService.getProductByBarcode(barCode);
 		// Then
 		verify(productRepository, times(1)).findProductByBarcode(any(String.class));
 		assertAll(
-				() -> assertTrue(currentProduct.isPresent()),
-				() -> assertEquals(NAME, currentProduct.get().getName()),
-				() -> assertEquals("barCode test", currentProduct.get().getBarcode())
+				() -> assertTrue(!currentProduct.isEmpty()),
+				() -> assertEquals(NAME, currentProduct.get(0).getName()),
+				() -> assertEquals("barCode test", currentProduct.get(0).getBarcode())
 		);
 	}
 	

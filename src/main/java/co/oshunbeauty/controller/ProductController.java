@@ -51,15 +51,15 @@ public class ProductController {
 	}
 	
 	@GetMapping("/barcodes")
-	public Product getProductByBarCode(@RequestParam final String barcode) {
-		Optional<Product> productFound = productService.getProductByBarcode(barcode);
+	public List<Product> getProductByBarCode(@RequestParam final String barcode) {
+		List<Product> productFound = productService.getProductByBarcode(barcode);
 		
 		if(productFound.isEmpty()) {
-			log.error("The product with barcode {} was not found.", barcode);
+			log.error("The products with barcode {} was not found.", barcode);
 			throw new ResourceNotFoundException(getMessageForProductNotFoundByBarcodeException(barcode));
 		}
 		
-		return productFound.get();
+		return productFound;
 	}
 	
 	@GetMapping("/names")
@@ -123,7 +123,7 @@ public class ProductController {
 	}
 	
 	private String getMessageForProductNotFoundByBarcodeException(String barCode) {
-		return String.format("El producto con el código de barras %s no fue encontrado", barCode);
+		return String.format("Productos con el código de barras %s no fueron encontrados", barCode);
 	}
 	
 	private String getMessageForProductsNotFoundByNameException(String name) {

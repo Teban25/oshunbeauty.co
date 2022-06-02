@@ -11,7 +11,7 @@
 
 	<groupId>co</groupId>
 	<artifactId>oshunbeauty</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>oshunbeauty</name>
 	<description>Support internal processes such as, inventory, purchases and sales</description>
 

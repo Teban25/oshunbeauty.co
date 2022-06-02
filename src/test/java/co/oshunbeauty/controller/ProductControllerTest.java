@@ -5,6 +5,7 @@ import co.oshunbeauty.exception.BadRequestException;
 import co.oshunbeauty.exception.ResourceNotFoundException;
 import co.oshunbeauty.service.ProductService;
 import co.oshunbeauty.validation.ValidationsService;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -113,14 +114,16 @@ public class ProductControllerTest {
 		String barCode = BAR_CODE;
 		Product productToFind = getProduct();
 		productToFind.setBarcode(BAR_CODE);
+		List<Product> productsToFind = new LinkedList<>();
+		productsToFind.add(productToFind);
 		// WHEN
-		when(productService.getProductByBarcode(any(String.class))).thenReturn(Optional.of(productToFind));
-		Product actualProduct = productController.getProductByBarCode(barCode);
+		when(productService.getProductByBarcode(any(String.class))).thenReturn(productsToFind);
+		List<Product> actualProduct = productController.getProductByBarCode(barCode);
 		// THEN
 		verify(productService, times(1)).getProductByBarcode(any(String.class));
 		assertAll(
 				() -> assertNotNull(actualProduct),
-				() -> assertEquals(barCode, actualProduct.getBarcode())
+				() -> assertEquals(barCode, actualProduct.get(0).getBarcode())
 		);
 	}
 	
@@ -129,7 +132,7 @@ public class ProductControllerTest {
 		// GIVEN
 		
 		// WHEN
-		when(productService.getProductByBarcode(any(String.class))).thenReturn(Optional.empty());
+		when(productService.getProductByBarcode(any(String.class))).thenReturn(new LinkedList<>());
 		// THEN
 		assertThrows(ResourceNotFoundException.class, () -> productController.getProductByBarCode(BAR_CODE));
 		verify(productService, times(1)).getProductByBarcode(any(String.class));

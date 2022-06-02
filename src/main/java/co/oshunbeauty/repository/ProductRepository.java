@@ -11,8 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM products p WHERE p.barcode = :barCode LIMIT 1")
-	Optional<Product> findProductByBarcode(@Param("barCode") String barCode);
+	@Query(nativeQuery = true, value = "SELECT * FROM products p WHERE p.barcode = :barCode")
+	List<Product> findProductByBarcode(@Param("barCode") String barCode);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM products p WHERE p.barcode = :barCode and p.name = :name LIMIT 1")
+	Optional<Product> findUniqueProductByBarcodeAndName(@Param("barCode") String barCode, @Param("name") String name);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM products p WHERE p.name LIKE '%' || :name || '%' ")
 	List<Product> findProductsByName(@Param("name") String name);

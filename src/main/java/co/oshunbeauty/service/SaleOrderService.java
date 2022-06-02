@@ -100,6 +100,7 @@ public class SaleOrderService {
 			
 			Product currentProduct = orderDetail.getProduct();
 			currentProduct.setCurrentAmount(currentProduct.getCurrentAmount() - orderDetail.getQuantity());
+			productService.updateProduct(currentProduct, creationUser);
 			orderDetail.setSaleOrderDetailDate(saleOrderDate);
 			orderDetail.setLastModifiedDate(saleOrderDate);
 			orderDetail.setCreationUser(creationUser);

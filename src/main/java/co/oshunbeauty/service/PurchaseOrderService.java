@@ -240,7 +240,7 @@ public class PurchaseOrderService {
 		Optional<Product> productOptFromDataBase;
 		if(productFromExcel.getBarcode() != null && !productFromExcel.getBarcode().isEmpty()) {
 			productOptFromDataBase = productService.
-					getProductByBarcode(productFromExcel.getBarcode());
+					getUniqueProductByBarcodeAndName(productFromExcel.getBarcode(), productFromExcel.getName());
 		} else {
 			productOptFromDataBase = productService.
 					getProductByNameAndBrand(productFromExcel.getName(), productFromExcel.getBrand().getBrandId());

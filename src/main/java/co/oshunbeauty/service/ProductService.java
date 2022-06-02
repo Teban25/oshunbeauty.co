@@ -41,8 +41,12 @@ public class ProductService {
 		return productRepository.findProductsByName(name);
 	}
 	
-	public Optional<Product> getProductByBarcode(String barCode) {
+	public List<Product> getProductByBarcode(String barCode) {
 		return productRepository.findProductByBarcode(barCode);
+	}
+	
+	public Optional<Product> getUniqueProductByBarcodeAndName(String barCode, String name) {
+		return productRepository.findUniqueProductByBarcodeAndName(barCode, name);
 	}
 	
 	public Product saveProduct(Product product, String user) {

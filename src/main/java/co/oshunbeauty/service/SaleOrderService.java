@@ -109,12 +109,20 @@ public class SaleOrderService {
 	}
 	
 	private void validateSaleOrderToAdd(SaleOrder saleOrderToRegister) throws BusinessSaleOrderException {
-		if (saleOrderToRegister == null) {
-			throw new BusinessSaleOrderException("La orden de venta no puede estar vacía");
-		}
+		validateEmptyOrders(saleOrderToRegister);
 		validateTypeOfPayment(saleOrderToRegister);
 		validateStockInSaleOrder(saleOrderToRegister);
 		validatePricesInSaleOrder(saleOrderToRegister);
+	}
+	
+	private void validateEmptyOrders(SaleOrder saleOrderToRegister) throws BusinessSaleOrderException {
+		if (saleOrderToRegister == null) {
+			throw new BusinessSaleOrderException("La orden de venta no puede estar vacía");
+		}
+		
+		if(saleOrderToRegister.getSaleOrderDetails() == null || saleOrderToRegister.getSaleOrderDetails().isEmpty()) {
+			throw new BusinessSaleOrderException("La orden no contiene productos para vender");
+		}
 	}
 	
 	private void validateTypeOfPayment(SaleOrder saleOrderToRegister) throws BusinessSaleOrderException {
